@@ -35,12 +35,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <a class="dropdown-item" href="{{ route('companies.index') }}">
-                            {{ __('Company') }}
-                        </a>
-                        <a class="dropdown-item" href="{{ route('employees.index') }}">
-                            {{ __('Employee') }}
-                        </a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -76,6 +70,12 @@
                                     </form>
                                 </div>
                             </li>
+                            <a class="dropdown-item" href="{{ route('companies.index') }}">
+                            {{ __('Company') }}
+                        </a>
+                        <a class="dropdown-item" href="{{ route('employees.index') }}">
+                            {{ __('Employee') }}
+                        </a>
                         @endguest
                     </ul>
                 </div>

@@ -6,6 +6,7 @@ use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 use App\DataTables\CompanyDataTable;
 
 class CompanyController extends Controller
@@ -93,6 +94,14 @@ class CompanyController extends Controller
         if(is_null($company)) {
             return response()->json(['message' => 'Company Not Found'], 404);
         }
+
+        if($request->hasFile('logo')){
+            File::delete(public_path('logos').'\\'. $company->logo);
+            $imageName = time().'-'.$request->name.'.'.$request->logo->extension();
+            $request->logo->move(public_path('logos'),$imageName);
+            $request->logo = $imageName;
+        }
+
         $company->update($request->all());
         return redirect()->route('companies.index')->with('Success','Created Successfully');
     }
@@ -106,6 +115,7 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         $company = Company::find($id);
+        File::delete(public_path('logos').'\\'. $company->logo);
         $company->delete();
         return redirect()->route('companies.index')->with('Success','Deleted Successfully');
     }
